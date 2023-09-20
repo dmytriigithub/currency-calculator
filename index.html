@@ -10,10 +10,20 @@
 <body>
     <h1>Currency calculator</h1>
     <div class="container">
-        <select id="from-select"></select>
-        <input id="from-input" type="text" value="1"> 
-        <select id="to-select"></select> 
-        <input id="to-input" type="text">   
+        <div class="rate">
+            <p>1</p>
+            <h2>1</h2>
+        </div>
+        <div class="box">
+            <input id="from-input" type="text" value="1">  
+            <span>|</span>
+            <select id="from-select"></select>
+        </div>
+        <div class="box">
+            <input id="to-input" type="text"> 
+            <span>|</span>
+            <select id="to-select"></select> 
+        </div>
     </div>
     
     <script src="script.js"></script>

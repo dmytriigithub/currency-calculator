@@ -2,6 +2,8 @@ const inputConvertFrom = document.querySelector('#from-input'),
       inputConvertTo = document.querySelector('#to-input'),
       selectFrom = document.querySelector('#from-select'),
       selectTo = document.querySelector('#to-select');
+      oneValue = document.querySelector('p');
+      resultValue = document.querySelector('h2');
 
 const url = 'https://open.er-api.com/v6/latest/USD';
 
@@ -35,7 +37,6 @@ function createOptions() {
                 if (key.includes('EUR')) {
                     convertFromCurrency.setAttribute('selected', true);
                 }
-                
 
                 const convertToCurrency = document.createElement('option');
                 convertToCurrency.innerHTML = key;
@@ -48,13 +49,12 @@ function createOptions() {
         .catch(error => {
             console.error(error);
         });
-
 }
 
 function currencyCalculator() {
     getResource(url)
         .then(data => {
-            if (inputConvertFrom.value === '') {
+            if (inputConvertFrom.value.search(/[0-9]+/)) {
                 inputConvertTo.value = '';
                 return;
             }
@@ -68,6 +68,9 @@ function currencyCalculator() {
                     rateTo = data.rates[key];
                 } 
 
+                oneValue.innerHTML = `1 ${selectFrom.value} equal`
+                resultValue.innerHTML = `${(((1 / rateFrom)) * rateTo).toFixed(2)} ${selectTo.value}`
+
                 inputConvertTo.value = (((+inputConvertFrom.value / rateFrom)) * rateTo).toFixed(2);
             }
         })
@@ -79,7 +82,7 @@ function currencyCalculator() {
 function mirrorCurrencyCalculator() {
     getResource(url)
         .then(data => {
-            if (inputConvertTo.value === '') {
+            if (inputConvertTo.value.search(/[0-9]+/)) {
                 inputConvertFrom.value = '';
                 return;
             }
