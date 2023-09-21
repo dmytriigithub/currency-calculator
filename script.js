@@ -54,7 +54,7 @@ function createOptions() {
 function currencyCalculator() {
     getResource(url)
         .then(data => {
-            if (inputConvertFrom.value.search(/[0-9]+/)) {
+            if (inputConvertFrom.value === '') {
                 inputConvertTo.value = '';
                 return;
             }
@@ -67,12 +67,10 @@ function currencyCalculator() {
                 } else if (selectTo.value === key) {
                     rateTo = data.rates[key];
                 } 
-
-                oneValue.innerHTML = `1 ${selectFrom.value} equal`
-                resultValue.innerHTML = `${(((1 / rateFrom)) * rateTo).toFixed(2)} ${selectTo.value}`
-
-                inputConvertTo.value = (((+inputConvertFrom.value / rateFrom)) * rateTo).toFixed(2);
             }
+            oneValue.innerHTML = `1 ${selectFrom.value} is equal to`
+            resultValue.innerHTML = `${(((1 / rateFrom)) * rateTo).toFixed(2)} ${selectTo.value}`
+            inputConvertTo.value = (((+inputConvertFrom.value / rateFrom)) * rateTo).toFixed(2);
         })
         .catch(error => {
             console.error(error);
@@ -82,7 +80,7 @@ function currencyCalculator() {
 function mirrorCurrencyCalculator() {
     getResource(url)
         .then(data => {
-            if (inputConvertTo.value.search(/[0-9]+/)) {
+            if (inputConvertTo.value === '') {
                 inputConvertFrom.value = '';
                 return;
             }
@@ -95,9 +93,8 @@ function mirrorCurrencyCalculator() {
                 } else if (selectTo.value === key) {
                     rateTo = data.rates[key];
                 }
-
-                inputConvertFrom.value = (((+inputConvertTo.value / rateTo)) * rateFrom).toFixed(2);
             }
+            inputConvertFrom.value = (((+inputConvertTo.value / rateTo)) * rateFrom).toFixed(2);
         })
         .catch(error => {
             console.error(error);
